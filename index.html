@@ -39,10 +39,11 @@ a{color:var(--teal-deep)}
 .head h1{color:#fff;margin-bottom:10px}
 .head p{color:#CFC3AE;margin:0}
 nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--panel);
-  border-bottom:1px solid var(--line);overflow-x:auto}
-nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:8px 14px;white-space:nowrap}
-nav a{display:block;font:600 11.5px/1 var(--d);letter-spacing:.09em;text-transform:uppercase;
-  color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:2px}
+  border-bottom:1px solid var(--line)}
+nav ul{display:flex;flex-wrap:wrap;gap:1px 2px;list-style:none;margin:0;padding:7px 14px}
+nav li{white-space:nowrap}
+nav a{display:block;font:600 11px/1 var(--d);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:7px 9px;border-radius:2px}
 nav a:hover{color:var(--teal-deep);background:var(--sand)}
 section{padding-block:clamp(32px,4.6vw,56px);border-bottom:1px solid var(--line);scroll-margin-top:60px}
 section:nth-child(even of section){background:var(--panel)}
@@ -151,6 +152,67 @@ nav a{transition:color .2s,background .2s}
   h2::after,.reveal{animation:none!important}
   .card,.suite,.fact,.gal img,.two figure img{transition:none!important}
 }
+/* ---------- photography ---------- */
+/* full-bleed banner that opens a section, with the number set into it */
+.bnr{position:relative;margin:0 0 clamp(26px,3.6vw,44px);
+  width:100vw;left:50%;transform:translateX(-50%);
+  height:clamp(190px,27vw,320px);overflow:hidden;background:var(--shade)}
+.bnr img{width:100%;height:100%;object-fit:cover;opacity:.88;
+  transform:scale(1.02);transition:transform 1.2s cubic-bezier(.22,1,.36,1)}
+.bnr:hover img{transform:scale(1.055)}
+.bnr::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(14,11,8,.86) 0%,rgba(14,11,8,.34) 48%,rgba(14,11,8,.06) 100%)}
+.bnr-n{position:absolute;top:clamp(10px,2vw,20px);right:clamp(16px,3vw,34px);z-index:2;
+  font:700 clamp(54px,11vw,128px)/1 var(--d);letter-spacing:-.04em;
+  color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.42)}
+.bnr-c{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:0 clamp(20px,5vw,40px) clamp(14px,2.4vw,24px)}
+.bnr-c .wrap{padding-inline:0}
+.bnr-k{font:600 11px/1.3 var(--d);letter-spacing:.22em;text-transform:uppercase;color:#9FDCD2;margin-bottom:6px}
+.bnr-t{font:400 clamp(14px,1.8vw,18px)/1.4 var(--b);color:#EDE4D3;font-style:italic;max-width:46ch}
+
+/* a figure that carries a number over the image */
+.statshot{position:relative;overflow:hidden;border:1px solid var(--line);margin:18px 0}
+.statshot img{width:100%;height:clamp(200px,26vw,300px);object-fit:cover}
+.statshot .sv{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:flex-start;justify-content:flex-end;padding:clamp(16px,3vw,28px);
+  background:linear-gradient(to right,rgba(14,11,8,.88) 0%,rgba(14,11,8,.55) 52%,rgba(14,11,8,.1) 100%)}
+.statshot .sn{font:700 clamp(32px,6vw,62px)/1 var(--d);color:#fff;letter-spacing:-.03em}
+.statshot .sl{font:400 clamp(13px,1.6vw,16px)/1.45 var(--b);color:#E0D5C0;max-width:34ch;margin-top:6px}
+
+/* diptych — two photos, hairline gap */
+.dip{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:16px 0}
+@media (max-width:560px){.dip{grid-template-columns:1fr}}
+.dip figure{margin:0;position:relative;overflow:hidden;min-width:0}
+.dip img{width:100%;height:clamp(170px,22vw,250px);object-fit:cover;display:block;
+  transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.dip figure:hover img{transform:scale(1.05)}
+.dip figcaption{position:absolute;left:0;right:0;bottom:0;padding:9px 12px;
+  font:600 11.5px/1.35 var(--d);letter-spacing:.05em;color:#fff;
+  background:linear-gradient(to top,rgba(14,11,8,.9),transparent)}
+
+/* mosaic — wrapping, never scrolls sideways */
+.mosaic{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:3px;margin:16px 0}
+.mosaic figure{margin:0;position:relative;overflow:hidden;min-width:0}
+.mosaic img{width:100%;height:150px;object-fit:cover;display:block;
+  transition:transform .7s cubic-bezier(.22,1,.36,1),filter .5s;filter:saturate(.92)}
+.mosaic figure:hover img{transform:scale(1.06);filter:saturate(1.05)}
+.mosaic figcaption{position:absolute;left:0;right:0;bottom:0;padding:7px 10px;
+  font:600 10.5px/1.3 var(--d);letter-spacing:.05em;color:#fff;opacity:0;
+  background:linear-gradient(to top,rgba(14,11,8,.92),transparent);
+  transform:translateY(6px);transition:opacity .3s,transform .3s}
+.mosaic figure:hover figcaption{opacity:1;transform:none}
+.mosaic figure.tall img{height:303px}
+@media (max-width:620px){.mosaic figure.tall img{height:150px}
+  .mosaic figcaption{opacity:1;transform:none}}
+
+/* inline portrait pair beside text */
+.sidepair{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.sidepair img{width:100%;height:clamp(180px,24vw,260px);object-fit:cover;display:block}
+
+@media (prefers-reduced-motion: reduce){
+  .bnr img,.dip img,.mosaic img,.mosaic figcaption{transition:none!important}
+}
 </style>
 
 <header class="head">
@@ -163,21 +225,25 @@ nav a{transition:color .2s,background .2s}
 </header>
 
 <nav><ul>
-  <li><a href="#position">Position</a></li>
-  <li><a href="#district">The district</a></li>
+  <li><a href="#position">What we hold</a></li>
+  <li><a href="#district">District</a></li>
   <li><a href="#market">Market</a></li>
   <li><a href="#anchors">Anchors</a></li>
-  <li><a href="#native">Native businesses</a></li>
-  <li><a href="#offer">The offer</a></li>
+  <li><a href="#native">Native business</a></li>
+  <li><a href="#offer">Offer</a></li>
   <li><a href="#incentives">Incentives</a></li>
-  <li><a href="#organize">How we organize</a></li>
+  <li><a href="#organize">Organize</a></li>
   <li><a href="#revenue">Revenue</a></li>
   <li><a href="#area">The area</a></li>
-  <li><a href="#collab">Collaborations</a></li>
-  <li><a href="#next">Next steps</a></li>
+  <li><a href="#collab">Partners</a></li>
+  <li><a href="#next">Next</a></li>
 </ul></nav>
 
 <section id="position">
+  <div class="bnr"><img src="img/bnr_position.jpg" alt="">
+    <span class="bnr-n">01</span>
+    <div class="bnr-c"><div class="bnr-k">What we hold</div><div class="bnr-t">Four buildings, a planted court, and solar over the lot. Forty thousand square feet we already own.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">01</p>
   <h2>What we hold, and what is open</h2>
@@ -207,6 +273,16 @@ nav a{transition:color .2s,background .2s}
     <tr><td>Food pantry</td><td class="w">Families through the door every week</td></tr>
     <tr><td>Pharmacy</td><td class="w">Coming</td></tr>
   </table></div>
+  <h3>The property</h3>
+  <div class="mosaic">
+    <figure class="tall"><img src="img/d_court.jpg" alt="The planted courtyard framed by an arcade arch"><figcaption>The planted court</figcaption></figure>
+    <figure><img src="img/d_arcade2.jpg" alt="The arcade and flagpole"><figcaption>Arcade and flag</figcaption></figure>
+    <figure><img src="img/d_entry.jpg" alt="A building entrance under the arcade"><figcaption>An entrance</figcaption></figure>
+    <figure><img src="img/d_breeze.jpg" alt="The breezeway between buildings"><figcaption>Breezeway between buildings</figcaption></figure>
+    <figure><img src="img/d_cover.jpg" alt="Covered parking along the north lot"><figcaption>Covered parking, north lot</figcaption></figure>
+    <figure><img src="img/d_sign.jpg" alt="The monument sign on Southern Avenue"><figcaption>The monument on Southern</figcaption></figure>
+    <figure><img src="img/d_monu.jpg" alt="The tenant directory sign"><figcaption>Tenant signage, included</figcaption></figure>
+  </div>
   <div class="box"><p><b>Tribes from across the country have rented here to serve their members.</b>
   When a nation has needed an address in this valley for its citizens, this is an address it has
   chosen. We have never used that in a pitch, and it is the strongest proof we hold.</p></div>
@@ -214,6 +290,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="district">
+  <div class="bnr"><img src="img/bnr_district.jpg" alt="">
+    <span class="bnr-n">02</span>
+    <div class="bnr-c"><div class="bnr-k">The corridor</div><div class="bnr-t">Looking west down Southern &mdash; toward Alma School, the new Sprouts and the Palo District.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">02</p>
   <h2>Why this corner is worth more than it was</h2>
@@ -277,6 +357,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="market">
+  <div class="bnr"><img src="img/bnr_market.jpg" alt="">
+    <span class="bnr-n">03</span>
+    <div class="bnr-c"><div class="bnr-k">The market</div><div class="bnr-t">Nearly three acres of parking, free and shaded. The one advantage newer product cannot copy.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">03</p>
   <h2>The market, and what we should charge</h2>
@@ -306,6 +390,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="anchors">
+  <div class="bnr"><img src="img/bnr_anchors.jpg" alt="">
+    <span class="bnr-n">04</span>
+    <div class="bnr-c"><div class="bnr-k">Three anchors first</div><div class="bnr-t">Shaded tables already set under the arcade. We are offering a caf&eacute; a patio, not asking it to build one.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">04</p>
   <h2>Three anchors first</h2>
@@ -345,6 +433,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="native">
+  <div class="bnr"><img src="img/bnr_native.jpg" alt="">
+    <span class="bnr-n">05</span>
+    <div class="bnr-c"><div class="bnr-k">Native business</div><div class="bnr-t">Every suite opens onto its own covered walk. A desk, then an office, then a suite &mdash; all at one address.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">05</p>
   <h2>Then fill the rest with Native businesses</h2>
@@ -357,11 +449,24 @@ nav a{transition:color .2s,background .2s}
   </div>
   <p>The third rung is the one that matters. It moves a business from the program&rsquo;s books onto
   ours, and it is the proof point we take to funders.</p>
-  <div class="box"><p><b>Two suites are ready now.</b> Suite 215 has private offices, a reception
+  <div class="dip">
+    <figure><img src="img/d_215door.jpg" alt="Suite 215 on the arcade"><figcaption>Suite 215 &mdash; reception window, kitchenette, its own restroom</figcaption></figure>
+    <figure><img src="img/d_315door.jpg" alt="Suite 315 storefront and door"><figcaption>Suite 315 &mdash; open reception, private offices, new floors</figcaption></figure>
+  </div>
+  <div class="dip">
+    <figure><img src="img/d_215off.jpg" alt="A private office in Suite 215"><figcaption>Inside 215</figcaption></figure>
+    <figure><img src="img/d_315main.jpg" alt="The open front area of Suite 315"><figcaption>Inside 315</figcaption></figure>
+  </div>
+    <div class="box"><p><b>Two suites are ready now.</b> Suite 215 has private offices, a reception
   window, a kitchenette and its own accessible restroom. Suite 315 has an open reception area and
   private offices with new flooring throughout. Neither needs demolition, permits or a build-out
   period.</p></div>
-  <h3>Where the names come from</h3>
+  <div class="mosaic">
+    <figure><img src="img/d_215kit.jpg" alt="The kitchenette in Suite 215"><figcaption>Kitchenette, inside the suite</figcaption></figure>
+    <figure><img src="img/d_215rest.jpg" alt="The accessible restroom in Suite 215"><figcaption>Its own accessible restroom</figcaption></figure>
+    <figure><img src="img/d_315off.jpg" alt="A private office in Suite 315"><figcaption>A private office</figcaption></figure>
+  </div>
+    <h3>Where the names come from</h3>
   <ul class="t">
     <li>The tribes, the Phoenix Indian Center, Moonshot, CO+HOOTS and the ITCA member nations.</li>
     <li>Eighteen member nations have citizens in Maricopa County, and nations have leased here before.</li>
@@ -371,9 +476,13 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="offer">
+  <div class="bnr"><img src="img/bnr_offer.jpg" alt="">
+    <span class="bnr-n">06</span>
+    <div class="bnr-c"><div class="bnr-k">Offer</div><div class="bnr-t">Your own door on the arcade. Not a lobby, not a corridor.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">06</p>
-  <h2>The offer</h2>
+  <h2>Offer</h2>
   <p>We will not win on rate and should not try. We win on terms, on what comes with the space, and
   on who the landlord is.</p>
   <div class="tw"><table>
@@ -397,6 +506,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="incentives">
+  <div class="bnr"><img src="img/bnr_organize.jpg" alt="">
+    <span class="bnr-n">07</span>
+    <div class="bnr-c"><div class="bnr-k">Incentives</div><div class="bnr-t">Southern Avenue frontage, and a federally designated Opportunity Zone underneath it.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">07</p>
   <h2>Incentives &mdash; what is real and who can use it</h2>
@@ -428,6 +541,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="organize">
+  <div class="bnr"><img src="img/bnr_collab.jpg" alt="">
+    <span class="bnr-n">08</span>
+    <div class="bnr-c"><div class="bnr-k">Organize</div><div class="bnr-t">Eleven shopping centers of institutional memory. Almost none of the current discipline.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">08</p>
   <h2>How we organize ourselves</h2>
@@ -477,6 +594,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="revenue">
+  <div class="bnr"><img src="img/bnr_revenue.jpg" alt="">
+    <span class="bnr-n">09</span>
+    <div class="bnr-c"><div class="bnr-k">What this could earn</div><div class="bnr-t">The plant is already running. Filling a suite adds a tenant, not a building.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">09</p>
   <h2>What this could earn</h2>
@@ -533,7 +654,11 @@ nav a{transition:color .2s,background .2s}
   already carry. Most of that rent reaches the bottom line, which is not true of a development
   project and is the reason Mesa is the fastest revenue in the system.</p></div>
 
-  <div class="box"><p><b>One honest caveat on cooling.</b> The plant is already sized and already
+  <div class="statshot"><img src="img/bnr_revenue.jpg" alt="Solar canopy over the parking lot">
+    <div class="sv"><div class="sn">$20,650</div>
+    <div class="sl">What an empty month costs at the blended rate. The building runs either way.</div></div>
+  </div>
+    <div class="box"><p><b>One honest caveat on cooling.</b> The plant is already sized and already
   being paid for, so occupancy adds marginal load rather than a new system. But it does add load.
   <b>The mini-split decision in December should be sized for a full building, not for the building
   as it sits today.</b> Deciding it against current occupancy would mean solving this twice.</p></div>
@@ -545,6 +670,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="area">
+  <div class="bnr"><img src="img/bnr_area.jpg" alt="">
+    <span class="bnr-n">10</span>
+    <div class="bnr-c"><div class="bnr-k">What else is happening</div><div class="bnr-t">A hospital, a college and a $2.5 billion district, all inside a mile and a half.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">10</p>
   <h2>What else is happening here</h2>
@@ -575,6 +704,10 @@ nav a{transition:color .2s,background .2s}
 </section>
 
 <section id="collab">
+  <div class="bnr"><img src="img/bnr_native.jpg" alt="">
+    <span class="bnr-n">11</span>
+    <div class="bnr-c"><div class="bnr-k">Where the collaborations are</div><div class="bnr-t">The arcade that two thousand patients a month already walk through.</div></div>
+  </div>
  <div class="wrap">
   <p class="num">11</p>
   <h2>Where the collaborations are</h2>
@@ -622,7 +755,7 @@ nav a{transition:color .2s,background .2s}
 <section id="next">
  <div class="wrap">
   <p class="num">12</p>
-  <h2>Next steps</h2>
+  <h2>Next</h2>
   <div class="todo"><b>By Friday, October 30</b>Suite inventory and readiness, every suite: size,
   condition, HVAC and electrical, accessibility, cost to make ready, target rate. <i>Orenda, with Tony and Bettina.</i></div>
   <div class="todo"><b>This week</b>Pull our own outbound referral data. That report becomes the
