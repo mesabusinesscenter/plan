@@ -1,2 +1,9 @@
-Redirect only. Keeps the original /plan/ link working — it was sent out
-before the page was renamed. Points to /growthplan/.
+# Mesa Business Center — growth plan
+
+Served at https://mesabusinesscenter.github.io/plan/ — the address that went
+out by email, kept permanently.
+
+The same page is also at https://mesabusinesscenter.github.io/growthplan/
+
+Terms shown, including the first-two-months concession, are a draft and
+have not been approved.
